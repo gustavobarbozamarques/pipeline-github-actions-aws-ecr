@@ -13,7 +13,6 @@ jobs:
   Build and publish image to AWS ECR:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
       - uses: actions/checkout@v2
       - name: Install AWS CLI
         run: |
