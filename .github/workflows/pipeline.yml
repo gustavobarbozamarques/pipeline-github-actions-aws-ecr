@@ -30,6 +30,5 @@ jobs:
       - name: Build and publish image
         run: |
           docker build -t ${{secrets.IMAGE_NAME}} .
-          docker tag ${{secrets.IMAGE_NAME}}:latest
-          ${{secrets.ECR_REPOSITORY_URI}}/${{secrets.IMAGE_NAME}}:latest
+          docker tag ${{secrets.IMAGE_NAME}}:latest ${{secrets.ECR_REPOSITORY_URI}}/${{secrets.IMAGE_NAME}}:latest
           docker push ${{secrets.ECR_REPOSITORY_URI}}/${{secrets.IMAGE_NAME}}:latest
