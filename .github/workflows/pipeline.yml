@@ -26,7 +26,7 @@ jobs:
           export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
           export AWS_DEFAULT_REGION=${{secrets.AWS_REGION}}
       - name: Login AWS ECR
-        run: aws ecr get-login --no-include-email
+        run: aws ecr get-login --no-include-email --region ${{secrets.AWS_REGION}}
       - name: Build and publish image
         run: |
           docker build -t ${{secrets.IMAGE_NAME}} .
