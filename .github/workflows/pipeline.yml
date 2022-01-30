@@ -16,18 +16,21 @@ jobs:
       - name: Check out repository code
       - uses: actions/checkout@v2
       - name: Install AWS CLI
-      - run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      - run: unzip awscliv2.zip
-      - run: sudo ./aws/install
-      - run: aws --version
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws --version
       - name: Configure AWS credentials
-      - run: export AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
-      - run: export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
-      - run: export AWS_DEFAULT_REGION=${{secrets.AWS_REGION}}
+        run: |
+          export AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
+          export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+          export AWS_DEFAULT_REGION=${{secrets.AWS_REGION}}
       - name: Login AWS ECR
-      - run: aws ecr get-login --no-include-email
+        run: aws ecr get-login --no-include-email
       - name: Build and publish image
-      - run: docker build -t ${{secrets.IMAGE_NAME}} .
-      - run: docker tag ${{secrets.IMAGE_NAME}}:latest
-      - run: ${{secrets.ECR_REPOSITORY_URI}}/${{secrets.IMAGE_NAME}}:latest
-      - run: docker push ${{secrets.ECR_REPOSITORY_URI}}/${{secrets.IMAGE_NAME}}:latest
+        run: |
+          docker build -t ${{secrets.IMAGE_NAME}} .
+          docker tag ${{secrets.IMAGE_NAME}}:latest
+          ${{secrets.ECR_REPOSITORY_URI}}/${{secrets.IMAGE_NAME}}:latest
+          docker push ${{secrets.ECR_REPOSITORY_URI}}/${{secrets.IMAGE_NAME}}:latest
